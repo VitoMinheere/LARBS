@@ -6,7 +6,7 @@
 On an Arch based distribution as root, run the following:
 
 ```
-curl -LO larbs.xyz/larbs.sh
+curl -LO https://raw.githubusercontent.com/VitoMinheere/LARBS/master/archi3/larbs.sh
 sh larbs.sh
 ```
 
@@ -140,7 +140,4 @@ several basic sudo commands without a password (`shutdown`, `reboot`,
 
 ## To-do list
 
-- Provide documentation on how to update dotfiles from remote repository.
-- Enable tap to click.
-- Keyboard luminosity script.
-- Add notification icons?
+- Add profile for chromium with all addons needed
