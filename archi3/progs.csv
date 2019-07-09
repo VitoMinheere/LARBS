@@ -69,3 +69,4 @@ G,https://github.com/lukesmithxyz/st.git,"is my custom build of suckless's termi
 ,docx2txt,"enables .docx file previews in vifm."
 ,odt2txt,"enables .odt file previews in vifm."
 ,calibre,"Organize ebooks and load them on Kindle."
+,light,"Change backlight brightness, xbacklight does not work on arch/thinkpad"
