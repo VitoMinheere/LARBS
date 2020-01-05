@@ -72,3 +72,4 @@ G,https://github.com/lukesmithxyz/st.git,"is my custom build of suckless's termi
 ,light,"Change backlight brightness, xbacklight does not work on arch/thinkpad"
 ,sysstat,"Display cpu % usage in statusbar"
 ,zim,"Personal wiki"
+,rsync,"Backup data"
