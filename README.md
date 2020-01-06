@@ -1,4 +1,4 @@
-# Luke's Auto-Rice Bootstraping Scripts (LARBS)
+# Vito's Auto-Rice Bootstraping Scripts (VARBS)
 
 
 ## Installation:
@@ -6,7 +6,7 @@
 On an Arch based distribution as root, run the following:
 
 ```
-curl -LO https://raw.githubusercontent.com/VitoMinheere/LARBS/master/archi3/larbs.sh
+curl -LO https://raw.githubusercontent.com/VitoMinheere/LARBS/master/larbs.sh
 sh larbs.sh
 ```
 
@@ -35,7 +35,7 @@ Here are some of the things LARBS sets up:
   times, as well as commands such as `getkeys` which print the default bindings
   of terminal applications. You can even stream instructional videos on topics
   with `Super+Shift+E`.
-- Installs [my dotfiles](https://github.com/lukesmithxyz/voidrice) giving as
+- Installs [my dotfiles](https://github.com/VitoMinheere/voidrice) giving as
   popularized on [my YouTube channel](https://youtube.com/c/Lukesmithxyz).
 - Sets up system requirements such as users, permissions, networking, audio and
   an AUR manager.
