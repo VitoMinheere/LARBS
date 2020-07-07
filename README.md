@@ -17,14 +17,14 @@ That's it.
 LARBS is a script that autoinstalls and autoconfigures a fully-functioning
 and minimal terminal-and-vim-based Arch Linux environment.
 
-LARBS was originally intended to be run on a fresh install of Arch Linux, and
-provides you with a fully configured diving-board for work or more
-customization. But LARBS also works on already configured systems *and* other
-Arch-based distros such as Manjaro, Antergos and Parabola (although Parabola,
-which uses slightly different repositories might miss one or two minor
-programs).
+LARBS is created by [Luke Smith](https://github.com/LukeSmithxyz/LARBS)
+I used his settings for a while before adding my own. During this time i skipped all upstream work so this branch is out of date with his.
+No issue for me as i prefer i3 above dwm and i like to install different programs(more software development oriented).
 
-Here are some of the things LARBS sets up:
+This setup has been used for over a year for software development work purposes.
+First using Arch but currently running Manjaro as i needed some GUI programs(damn you teamviewer)
+
+Here are some of the things VARBS sets up:
 
 - Installs i3-gaps, a tiling window manager, with my fully featured
   configuration along with dozens of lightweight and vim-centric terminal
@@ -33,64 +33,28 @@ Here are some of the things LARBS sets up:
 - Massive documentation making use even for novices seamless. A help document
   with all bindings for the window manager accessible with `Super+F1` at all
   times, as well as commands such as `getkeys` which print the default bindings
-  of terminal applications. You can even stream instructional videos on topics
-  with `Super+Shift+E`.
-- Installs [my dotfiles](https://github.com/VitoMinheere/voidrice) giving as
-  popularized on [my YouTube channel](https://youtube.com/c/Lukesmithxyz).
+  of terminal applications.
+- Installs [my dotfiles](https://github.com/VitoMinheere/voidrice)
 - Sets up system requirements such as users, permissions, networking, audio and
   an AUR manager.
 - All done behind a `dialog` based user interface.
 
-## Changes since first release
+## Changes from LARBS
 
+- Only 1 window manager will be installed, as i am running it in Manjaro with XFCE or KDE.
 - More documentation in the `getkeys` program and `mod+shift-e`.
-- Luke's build of st is now the default terminal, instead of urxvt. This
-  includes:
-  	- Full unicode compatibility
-	- vim-like bindings
-	- Scrollback with keys and mouse, clipboard use and other add ons to
-	  the default st build
-	- Xresources colors, allowing the use of wal/pywal
-- i3status is the status bar instead of Polybar, which was bloated and failed
-  to build on many machines. The new i3status includes the modules below, all
-  of which are constructed to be as minimal and light on system resources as
-  possible:
-  	- Weather forecasts using `wttr.in`, with highs, lows and rain chance.
-	- Current song information from `mpd`
-	- Unread mail from Luke's `mutt-wizard`
+- i3status is tweaked to my preferences. I don't need the weather service(as it doesn't work out of the box in EU). It now has:
+  	- CPU usage and temp.
+	- RAM usage
+	- Disk Space left
 	- Possible pacman updates
-	- Status of torrents in transmission-daemon
 	- Expected date, time, battery, internet and volume modules
-- Switch from mocp to mpd/ncmpcpp for music.
-- System is more minimalist/suckless.
-- dmenu is used instead of rofi for simplicity's sake.
-- Deployment of my new mutt-wizard for secure offline email configuration
-  instead of config files for the user to manually edit.
-- Firefox instead of qutebrowser for default browser (qutebrowser configs
-  remain for qutebrowser afeccionados)
-- A default profile of Firefox including some privacy features, an ad-blocker
-  and VimVixen, for vim-based keyboard shortcuts.
-- Extensive implementation of dmenu, including for mounting/unmounting drives,
-  display selection, confirmation for shutdown and other crucial commands, link
-  handling and screen/audio recording.
-- Updates to config files can be pulled with git now.
-- i3 window resize now intuitive directions
-- Removal of a lot of brainlethood in the original design, where I relocated
-  configs for alleged extensibility's sake. That's all been fixed now.
-- Configs for the new versions of qutebrowser, newsboat/newsbeuter, neomutt,
-  etc.
-- Link handling scripts for mutt, newsboat and vim
-- vi mode is now default in bash (with retention of emacs-mode ctrl-l)
-- Caps lock functions both as a super key and escape key with xcape.
-- Use of the much better, newer version of my shortcut-sync.
-- And the repository is *significantly* smaller than it was before, meaning a
-  faster download.
-- A million and one other tweaks and bug fixes.
+- Chromium as default browser.
 
 ## Customization
 
 By default, LARBS uses the programs [here in progs.csv](archi3/progs.csv) and installs
-[my dotfiles repo (voidrice) here](https://github.com/lukesmithxyz/voidrice),
+[my dotfiles repo (voidrice) here](https://github.com/VitoMinheere/voidrice),
 but you can easily change this by either modifying the default variables at the
 beginning of the script or giving the script one of these options:
 
@@ -137,7 +101,3 @@ effectively with the `newperms` function. At the end of installation,
 `newperms` removes those settings, giving the user the ability to run only
 several basic sudo commands without a password (`shutdown`, `reboot`,
 `pacman -Syu`).
-
-## To-do list
-
-- Add profile for chromium with all addons needed
