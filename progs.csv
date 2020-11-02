@@ -64,5 +64,7 @@ G,https://github.com/lukesmithxyz/st.git,"is my custom build of suckless's termi
 ,light,"Change backlight brightness, xbacklight does not work on arch/thinkpad"
 ,sysstat,"Display cpu % usage in statusbar"
 ,rsync,"Backup data"
-,code,"Open source Visual Code"
 ,wget,"Download websites"
+A,flutter,"mobile app SDK to help developers and designers build modern mobile apps for iOS and Android"
+,go,"Core compiler tools for the Go programming language"
+A,google-cloud-sdk."Google Cloud Platform SDK tools"
