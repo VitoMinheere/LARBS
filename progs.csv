@@ -67,4 +67,4 @@ G,https://github.com/lukesmithxyz/st.git,"is my custom build of suckless's termi
 ,wget,"Download websites"
 A,flutter,"mobile app SDK to help developers and designers build modern mobile apps for iOS and Android"
 ,go,"Core compiler tools for the Go programming language"
-A,google-cloud-sdk."Google Cloud Platform SDK tools"
+A,google-cloud-sdk,"Google Cloud Platform SDK tools"
