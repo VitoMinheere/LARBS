@@ -55,9 +55,19 @@ adduserandpass() { \
 	# Adds user `$name` with password $pass1.
 	dialog --infobox "Adding user \"$name\"..." 4 50
 	useradd -m -g wheel -s /bin/bash "$name" >/dev/null 2>&1 ||
+	useradd -m -g video -s /bin/bash "$name" >/dev/null 2>&1 ||
+	useradd -m -g docker -s /bin/bash "$name" >/dev/null 2>&1 ||
 	usermod -a -G wheel "$name" && mkdir -p /home/"$name" && chown "$name":wheel /home/"$name"
 	echo "$name:$pass1" | chpasswd
 	unset pass1 pass2 ;}
+
+createuserdirs(){ # Set up folder structure
+    mkdir -p /home/"$name"/Developer/Python
+    mkdir -p /home/"$name"/Developer/websites
+    mkdir -p /home/"$name"/Documents/
+    mkdir -p /home/"$name"/.ssh/
+    }
+
 
 refreshkeys() { \
 	dialog --infobox "Refreshing Arch Keyring..." 4 40
@@ -170,6 +180,7 @@ preinstallmsg || error "User exited."
 ### The rest of the script requires no user input.
 
 adduserandpass || error "Error adding username and/or password."
+createuserdirs || error "Error creating directories in users  home."
 
 # Refresh Arch keyrings.
 refreshkeys || error "Error automatically refreshing Arch keyring. Consider doing so manually."
