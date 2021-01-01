@@ -64,7 +64,7 @@ mount /dev/sda4 /mnt/home
 
 pacman -Sy --noconfirm archlinux-keyring
 
-pacstrap /mnt base base-devel
+pacstrap /mnt linux linux-firmware base base-devel
 
 genfstab -U /mnt >> /mnt/etc/fstab
 cat tz.tmp > /mnt/tzfinal.tmp
