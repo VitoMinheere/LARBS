@@ -54,9 +54,8 @@ preinstallmsg() { \
 adduserandpass() { \
 	# Adds user `$name` with password $pass1.
 	dialog --infobox "Adding user \"$name\"..." 4 50
-	useradd -m -g wheel -s /bin/bash "$name" >/dev/null 2>&1 ||
-	useradd -m -g video -s /bin/bash "$name" >/dev/null 2>&1 ||
-	useradd -m -g docker -s /bin/bash "$name" >/dev/null 2>&1 ||
+    groupadd video,docker >/dev/null
+	useradd -m -g wheel -G video,docker -s /bin/bash "$name" >/dev/null 2>&1 ||
 	usermod -a -G wheel "$name" && mkdir -p /home/"$name" && chown "$name":wheel /home/"$name"
 	echo "$name:$pass1" | chpasswd
 	unset pass1 pass2 ;}
