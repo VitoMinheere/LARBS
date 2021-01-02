@@ -17,44 +17,13 @@ That's it.
 LARBS is a script that autoinstalls and autoconfigures a fully-functioning
 and minimal terminal-and-vim-based Arch Linux environment.
 
-LARBS is created by [Luke Smith](https://github.com/LukeSmithxyz/LARBS)
-I used his settings for a while before adding my own. During this time i skipped all upstream work so this branch is out of date with his.
-No issue for me as i prefer i3 above dwm and i like to install different programs(more software development oriented).
-
-This setup has been used for over a year for software development work purposes.
-First using Arch but currently running Manjaro as i needed some GUI programs(damn you teamviewer)
-
-Here are some of the things VARBS sets up:
-
-- Installs i3-gaps, a tiling window manager, with my fully featured
-  configuration along with dozens of lightweight and vim-centric terminal
-  applications that replace the more over-encumbering
-  programs on most machines.
-- Massive documentation making use even for novices seamless. A help document
-  with all bindings for the window manager accessible with `Super+F1` at all
-  times, as well as commands such as `getkeys` which print the default bindings
-  of terminal applications.
-- Installs [my dotfiles](https://github.com/VitoMinheere/voidrice)
-- Sets up system requirements such as users, permissions, networking, audio and
-  an AUR manager.
-- All done behind a `dialog` based user interface.
-
-## Changes from LARBS
-
-- Only 1 window manager will be installed, as i am running it in Manjaro with XFCE or KDE.
-- More documentation in the `getkeys` program and `mod+shift-e`.
-- i3status is tweaked to my preferences. I don't need the weather service(as it doesn't work out of the box in EU). It now has:
-  	- CPU usage and temp.
-	- RAM usage
-	- Disk Space left
-	- Possible pacman updates
-	- Expected date, time, battery, internet and volume modules
-- Chromium as default browser.
+LARBS can be run on a fresh install of Arch or Artix Linux, and provides you
+with a fully configured diving-board for work or more customization.
 
 ## Customization
 
-By default, LARBS uses the programs [here in progs.csv](archi3/progs.csv) and installs
-[my dotfiles repo (voidrice) here](https://github.com/VitoMinheere/voidrice),
+By default, LARBS uses the programs [here in progs.csv](progs.csv) and installs
+[my dotfiles repo (voidrice) here](https://github.com/lukesmithxyz/voidrice),
 but you can easily change this by either modifying the default variables at the
 beginning of the script or giving the script one of these options:
 
@@ -70,7 +39,8 @@ that the programs file must be a three column `.csv`.
 
 The first column is a "tag" that determines how the program is installed, ""
 (blank) for the main repository, `A` for via the AUR or `G` if the program is a
-git repository that is meant to be `make && sudo make install`ed.
+git repository that is meant to be `make && sudo make install`ed. `V`if it's for
+the void linux distribution's xbps package manager.
 
 The second column is the name of the program in the repository, or the link to
 the git repository, and the third comment is a description (should be a verb
@@ -81,11 +51,12 @@ for people who read the csv or who want to install my dotfiles manually.
 Depending on your own build, you may want to tactically order the programs in
 your programs file. LARBS will install from the top to the bottom.
 
-If you include commas in your program descriptions, be sure to include double quotes around the whole description to ensure correct parsing.
+If you include commas in your program descriptions, be sure to include double
+quotes around the whole description to ensure correct parsing.
 
 ### The script itself
 
-The script is broken up extensively into functions for easier readability and
+The script is extensively divided into functions for easier readability and
 trouble-shooting. Most everything should be self-explanatory.
 
 The main work is done by the `installationloop` function, which iterates
