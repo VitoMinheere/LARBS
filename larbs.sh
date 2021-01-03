@@ -172,7 +172,6 @@ preinstallmsg || error "User exited."
 ### The rest of the script requires no user input.
 
 adduserandpass || error "Error adding username and/or password."
-createuserdirs || error "Error creating directories in users  home."
 
 # Refresh Arch keyrings.
 refreshkeys || error "Error automatically refreshing Arch keyring. Consider doing so manually."
