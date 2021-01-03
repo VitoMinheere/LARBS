@@ -54,19 +54,12 @@ preinstallmsg() { \
 adduserandpass() { \
 	# Adds user `$name` with password $pass1.
 	dialog --infobox "Adding user \"$name\"..." 4 50
-    groupadd video,docker >/dev/null
+    groupadd -f video,
+    groupadd -f docker
 	useradd -m -g wheel -G video,docker -s /bin/bash "$name" >/dev/null 2>&1 ||
 	usermod -a -G wheel "$name" && mkdir -p /home/"$name" && chown "$name":wheel /home/"$name"
 	echo "$name:$pass1" | chpasswd
 	unset pass1 pass2 ;}
-
-createuserdirs(){ # Set up folder structure
-    mkdir -p /home/"$name"/Developer/Python
-    mkdir -p /home/"$name"/Developer/websites
-    mkdir -p /home/"$name"/Documents/
-    mkdir -p /home/"$name"/.ssh/
-    }
-
 
 refreshkeys() { \
 	dialog --infobox "Refreshing Arch Keyring..." 4 40
