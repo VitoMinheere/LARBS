@@ -214,7 +214,7 @@ dialog --infobox "Installing (neo)vim plugins..." 4 50
 sudo -u "$name" nvim -E -c "PlugUpdate|visual|q|q" >/dev/null 2>&1
 
 # Enable services here.
-serviceinit NetworkManager cronie
+serviceinit NetworkManager cronie bluetooth docker
 
 # Most important command! Get rid of the beep!
 systembeepoff

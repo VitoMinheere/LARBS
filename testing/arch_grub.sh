@@ -103,7 +103,7 @@ systemctl start NetworkManager
 pacman --noconfirm --needed -S grub && grub-install --target=i386-pc /dev/sda && grub-mkconfig -o /boot/grub/grub.cfg
 
 pacman --noconfirm --needed -S dialog
-larbs() { curl -O https://raw.githubusercontent.com/LukeSmithxyz/LARBS/master/src/larbs.sh && bash larbs.sh ;}
+larbs() { curl -O https://raw.githubusercontent.com/VitoMinheere/LARBS/master/src/larbs.sh && bash larbs.sh ;}
 dialog --title "Install Vito's Rice" --yesno "This install script will easily let you access Vito's Auto-Rice Boostrapping Scripts (VARBS) which automatically install a full Arch Linux i3-gaps desktop environment.\n\nIf you'd like to install this, select yes, otherwise select no."  15 60 && larbs
 ### END
 
