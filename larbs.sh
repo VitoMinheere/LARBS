@@ -58,12 +58,19 @@ adduserandpass() { \
     groupadd -f docker
 	useradd -m -g wheel -G video,docker -s /bin/bash "$name" >/dev/null 2>&1 ||
 	usermod -a -G wheel "$name" && mkdir -p /home/"$name" && chown "$name":wheel /home/"$name"
+    mkdir -p /home/"$name"/Music /home/"$name"/Documents /home/"$name"/Downloads
 	echo "$name:$pass1" | chpasswd
 	unset pass1 pass2 ;}
 
 refreshkeys() { \
 	dialog --infobox "Refreshing Arch Keyring..." 4 40
 	pacman --noconfirm -Sy archlinux-keyring >/dev/null 2>&1
+	}
+
+getfastestmirrors() { \
+	dialog --infobox "Generating fastest mirror list" 4 40
+    pacman -Sy --noconfirm --needed pacman-contrib
+    curl -s "https://archlinux.org/mirrorlist/?country=NL&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 - > /etc/pacman.d/mirrorlist
 	}
 
 newperms() { # Set special sudoers settings for install (or after).

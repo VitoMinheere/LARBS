@@ -9,7 +9,7 @@ pacman -S --noconfirm dialog || { echo "Error at script start: Are you sure you'
 
 dialog --defaultno --title "DON'T BE A BRAINLET!" --yesno "This is an Arch install script that uses UEFI to boot.\n\nOnly run this script on newer Thinkpads which only have UEFI.\n\nWill delete all data on nvme0n1\n\n"  15 60 || exit
 
-dialog --defaultno --title "DON'T BE A BRAINLET!" --yesno "Do you think I'm meming? Only select yes to DELET your entire /dev/sda and reinstall Arch.\n\nTo stop this script, press no."  10 60 || exit
+dialog --defaultno --title "DON'T BE A BRAINLET!" --yesno "Do you think I'm meming? Only select yes to DELETE your entire /dev/nvme0n1 and reinstall Arch.\n\nTo stop this script, press no."  10 60 || exit
 
 dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
@@ -94,7 +94,7 @@ echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "en_US ISO-8859-1" >> /etc/locale.gen
 locale-gen
 
-pacman --noconfirm --needed -S networkmanager
+pacman --noconfirm --needed -S networkmanager efibootmgr
 systemctl enable NetworkManager
 systemctl start NetworkManager
 
