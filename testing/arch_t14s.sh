@@ -7,13 +7,13 @@
 
 pacman -S --noconfirm dialog || { echo "Error at script start: Are you sure you're running this as the root user? Are you sure you have an internet connection?"; exit; }
 
-dialog --defaultno --title "DON'T BE A BRAINLET!" --yesno "This is an Arch install script that uses UEFI to boot.\n\nOnly run this script on newer Thinkpads which only have UEFI.\n\nWill delete all data on sda\n\n"  15 60 || exit
+dialog --defaultno --title "DON'T BE A BRAINLET!" --yesno "This is an Arch install script that uses UEFI to boot.\n\nOnly run this script on newer Thinkpads which only have UEFI.\n\nWill delete all data on nvme0n1\n\n"  15 60 || exit
 
 dialog --defaultno --title "DON'T BE A BRAINLET!" --yesno "Do you think I'm meming? Only select yes to DELET your entire /dev/sda and reinstall Arch.\n\nTo stop this script, press no."  10 60 || exit
 
 dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
-dialog --defaultno --title "Time Zone select" --yesno "Do you want use the default time zone(America/New_York)?.\n\nPress no for select your own time zone"  10 60 && echo "America/New_York" > tz.tmp || tzselect > tz.tmp
+dialog --defaultno --title "Time Zone select" --yesno "Do you want use the default time zone(Europe/Amsterdam)?.\n\nPress no for select your own time zone"  10 60 && echo "Europe/Amsterdam" > tz.tmp || tzselect > tz.tmp
 
 dialog --no-cancel --inputbox "Enter partitionsize in gb, separated by space (swap & root)." 10 60 2>psize
 
@@ -37,7 +37,7 @@ fi
 
 timedatectl set-ntp true
 
-cat <<EOF | fdisk /dev/sda
+cat <<EOF | fdisk /dev/nvme0n1
 o
 n
 p
@@ -80,7 +80,6 @@ pacstrap /mnt linux linux-firmware base base-devel
 genfstab -U /mnt >> /mnt/etc/fstab
 cp tz.tmp /mnt/tzfinal.tmp
 rm tz.tmp
-curl https://raw.githubusercontent.com/VitoMinheere/LARBS/master/testing/chroot.sh > /mnt/chroot.sh && arch-chroot /mnt bash chroot.sh && rm /mnt/chroot.sh
 
 ### BEGIN
 arch-chroot /mnt echo "root:$pass" | chpasswd
@@ -102,7 +101,7 @@ systemctl start NetworkManager
 pacman --noconfirm --needed -S grub efibootmgr && grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB /dev/nvme0n1 && grub-mkconfig -o /boot/grub/grub.cfg
 
 pacman --noconfirm --needed -S dialog
-larbs() { curl -O https://raw.githubusercontent.com/VitoMinheere/LARBS/master/src/larbs.sh && bash larbs.sh ;}
+larbs() { curl -O https://raw.githubusercontent.com/VitoMinheere/LARBS/master/larbs.sh && chmod +x larbs.sh && ./larbs.sh ;}
 dialog --title "Install Vito's Rice" --yesno "This install script will easily let you access Vito's Auto-Rice Boostrapping Scripts (VARBS) which automatically install a full Arch Linux i3-gaps desktop environment.\n\nIf you'd like to install this, select yes, otherwise select no."  15 60 && larbs
 ### END
 
