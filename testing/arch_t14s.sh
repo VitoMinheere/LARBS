@@ -64,16 +64,32 @@ partprobe
 
 pacman --noconfirm --needed -S dosfstools amd-ucode
 
-yes | mkfs.ext4 /dev/nvme0n1p4
-yes | mkfs.ext4 /dev/nvme0n1p3
+# Add encryption to /home
+lukspass1=$(dialog --no-cancel --passwordbox "Enter a root password." 10 60 3>&1 1>&2 2>&3 3>&1)
+lukspass2=$(dialog --no-cancel --passwordbox "Retype password." 10 60 3>&1 1>&2 2>&3 3>&1)
+
+while true; do
+	[[ "$lukspass1" != "" && "$lukspass1" == "$lukspass2" ]] && break
+	lukspass1=$(dialog --no-cancel --passwordbox "Passwords do not match or are not present.\n\nEnter password again." 10 60 3>&1 1>&2 2>&3 3>&1)
+	lukspass2=$(dialog --no-cancel --passwordbox "Retype password." 10 60 3>&1 1>&2 2>&3 3>&1)
+done
+export lukspass="$lukspass1"
+echo "$lukspass" | cryptsetup luksFormat /dev/nvme0n1p4
+echo "$lukspass" | cryptsetup open /dev/nvme0n1p4 cryptroot
+
+
 yes | mkfs.fat -F32 /dev/nvme0n1p1
+yes | mkfs.ext4 /dev/nvme0n1p3
+yes | mkfs.ext4 /dev/mapper/cryptroot
+
 mkswap /dev/nvme0n1p2
 swapon /dev/nvme0n1p2
+
 mount /dev/nvme0n1p3 /mnt
 mkdir -p /mnt/boot
 mount /dev/nvme0n1p1 /mnt/boot
 mkdir -p /mnt/home
-mount /dev/nvme0n1p4 /mnt/home
+mount /dev/mapper/cryptroot /mnt/home
 
 pacstrap /mnt linux linux-firmware base base-devel
 
@@ -83,6 +99,10 @@ rm tz.tmp
 
 ### BEGIN
 arch-chroot /mnt echo "root:$pass" | chpasswd
+
+# Update mkinitcpio to use LUKS
+sed -i 's/MODULES=()/MODULES=(ext4)/' mkinitcpio.conf
+sed -i 's/filesystems/encrypt filesystems/' mkinitcpio.conf
 
 TZuser=$(cat tzfinal.tmp)
 
@@ -98,7 +118,15 @@ pacman --noconfirm --needed -S networkmanager efibootmgr
 systemctl enable NetworkManager
 systemctl start NetworkManager
 
-pacman --noconfirm --needed -S grub efibootmgr && grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB /dev/nvme0n1 && grub-mkconfig -o /boot/grub/grub.cfg
+# Setup GRUB
+sed -i 's/#GRUB_ENABLE/GRUB_ENABLE/' /etc/default/grub
+sed -i 's/GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"cryptdevice=\/dev\/nvme0n1p4:luks\"/' /etc/default/grub
+
+pacman --noconfirm --needed -S grub efibootmgr
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB /dev/nvme0n1
+grub-mkconfig -o /boot/grub/grub.cfg
+
+
 
 pacman --noconfirm --needed -S dialog
 larbs() { curl -O https://raw.githubusercontent.com/VitoMinheere/LARBS/master/larbs.sh && chmod +x larbs.sh && ./larbs.sh ;}
