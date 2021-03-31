@@ -103,6 +103,7 @@ arch-chroot /mnt echo "root:$pass" | chpasswd
 # Update mkinitcpio to use LUKS
 sed -i 's/MODULES=()/MODULES=(ext4)/' /etc/mkinitcpio.conf
 sed -i 's/filesystems/encrypt filesystems/' /etc/mkinitcpio.conf
+mkinitcpio -p linux
 
 TZuser=$(cat tzfinal.tmp)
 
@@ -119,10 +120,10 @@ systemctl enable NetworkManager
 systemctl start NetworkManager
 
 # Setup GRUB
-sed -i 's/#GRUB_ENABLE/GRUB_ENABLE/' /etc/default/grub
-sed -i 's/GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"cryptdevice=\/dev\/nvme0n1p4:luks\"/' /etc/default/grub
-
 pacman --noconfirm --needed -S grub efibootmgr
+sed -i 's/#GRUB_ENABLE/GRUB_ENABLE/' /etc/default/grub
+sed -i 's/quiet/quiet acpi_backlight=vendor/' /etc/default/grub
+sed -i 's/GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"cryptdevice=\/dev\/nvme0n1p4:cryptroot\"/' /etc/default/grub
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB /dev/nvme0n1
 grub-mkconfig -o /boot/grub/grub.cfg
 
