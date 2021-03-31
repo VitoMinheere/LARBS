@@ -65,7 +65,7 @@ partprobe
 pacman --noconfirm --needed -S dosfstools amd-ucode
 
 # Add encryption to /home
-lukspass1=$(dialog --no-cancel --passwordbox "Enter a root password." 10 60 3>&1 1>&2 2>&3 3>&1)
+lukspass1=$(dialog --no-cancel --passwordbox "Enter a LUKS password." 10 60 3>&1 1>&2 2>&3 3>&1)
 lukspass2=$(dialog --no-cancel --passwordbox "Retype password." 10 60 3>&1 1>&2 2>&3 3>&1)
 
 while true; do
@@ -101,8 +101,8 @@ rm tz.tmp
 arch-chroot /mnt echo "root:$pass" | chpasswd
 
 # Update mkinitcpio to use LUKS
-sed -i 's/MODULES=()/MODULES=(ext4)/' mkinitcpio.conf
-sed -i 's/filesystems/encrypt filesystems/' mkinitcpio.conf
+sed -i 's/MODULES=()/MODULES=(ext4)/' /etc/mkinitcpio.conf
+sed -i 's/filesystems/encrypt filesystems/' /etc/mkinitcpio.conf
 
 TZuser=$(cat tzfinal.tmp)
 
@@ -129,7 +129,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 
 pacman --noconfirm --needed -S dialog
-larbs() { curl -O https://raw.githubusercontent.com/VitoMinheere/LARBS/master/larbs.sh && chmod +x larbs.sh && ./larbs.sh ;}
+larbs() { curl -LO https://raw.githubusercontent.com/VitoMinheere/LARBS/master/larbs.sh && chmod +x larbs.sh && ./larbs.sh ;}
 dialog --title "Install Vito's Rice" --yesno "This install script will easily let you access Vito's Auto-Rice Boostrapping Scripts (VARBS) which automatically install a full Arch Linux i3-gaps desktop environment.\n\nIf you'd like to install this, select yes, otherwise select no."  15 60 && larbs
 ### END
 
